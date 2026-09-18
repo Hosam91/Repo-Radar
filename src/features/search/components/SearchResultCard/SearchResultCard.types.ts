@@ -1,5 +1,6 @@
 import type { SearchRepository } from "../../../../shared/types/repository";
 
 export interface SearchResultCardProps {
-  repository: SearchRepository;
+  repo: SearchRepository;
+  onTrack: (repo: SearchRepository) => void;
 }

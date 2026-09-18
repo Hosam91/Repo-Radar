@@ -1,18 +1,20 @@
 import { Stack, Typography } from "@mui/material";
-
-import { useAppSelector } from "../../../../redux/hooks";
 import {
   selectSearchError,
   selectSearchResults,
   selectSearchStatus,
 } from "../../../../redux/search/searchSelectors";
 import { SearchResultCard } from "../SearchResultCard";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { trackRepository } from "../../../../redux/trackedRepos/trackedReposSlice";
+import { fetchMissingCommit } from "../../../../redux/trackedRepos/trackedReposThunks";
+import type { SearchRepository } from "../../../../shared/types/repository";
 
 export function SearchResults() {
   const results = useAppSelector(selectSearchResults);
   const status = useAppSelector(selectSearchStatus);
   const error = useAppSelector(selectSearchError);
-
+  const dispatch = useAppDispatch();
   if (status === "idle") {
     return null;
   }
@@ -29,10 +31,15 @@ export function SearchResults() {
     return <Typography>No repositories found.</Typography>;
   }
 
+  const handleTrack = (repo: SearchRepository) => {
+    dispatch(trackRepository(repo));
+    dispatch(fetchMissingCommit(repo.id));
+  };
+
   return (
     <Stack spacing={2}>
       {results.map((repo) => (
-        <SearchResultCard key={repo.id} repository={repo} />
+        <SearchResultCard key={repo.id} repo={repo} onTrack={handleTrack} />
       ))}
     </Stack>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
 import { SearchInput } from "../../features/search/components/SearchInput";
 import { SearchResults } from "../../features/search/components/SearchResults";
+import { TrackedReposList } from "../../features/trackedRepos/components/TrackedReposList";
 
 export function DashboardPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -32,9 +33,7 @@ export function DashboardPage() {
           </Box>
         )}
 
-        {activeTab === 1 && (
-          <Typography>Tracked repositories content</Typography>
-        )}
+        {activeTab === 1 && <TrackedReposList />}
       </Box>
     </Container>
   );
