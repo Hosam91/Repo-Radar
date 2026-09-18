@@ -9,12 +9,15 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { trackRepository } from "../../../../redux/trackedRepos/trackedReposSlice";
 import { fetchMissingCommit } from "../../../../redux/trackedRepos/trackedReposThunks";
 import type { SearchRepository } from "../../../../shared/types/repository";
+import { selectTrackedRepoIds } from "../../../../redux/trackedRepos/trackedReposSelectors";
 
 export function SearchResults() {
   const results = useAppSelector(selectSearchResults);
   const status = useAppSelector(selectSearchStatus);
   const error = useAppSelector(selectSearchError);
   const dispatch = useAppDispatch();
+  const trackedRepoIds = useAppSelector(selectTrackedRepoIds);
+
   if (status === "idle") {
     return null;
   }
@@ -31,15 +34,24 @@ export function SearchResults() {
     return <Typography>No repositories found.</Typography>;
   }
 
-  const handleTrack = (repo: SearchRepository) => {
-    dispatch(trackRepository(repo));
-    dispatch(fetchMissingCommit(repo.id));
+  const handleTrack = (repository: SearchRepository) => {
+    if (trackedRepoIds.includes(repository.id)) {
+      return;
+    }
+
+    dispatch(trackRepository(repository));
+    dispatch(fetchMissingCommit(repository.id));
   };
 
   return (
     <Stack spacing={2}>
       {results.map((repo) => (
-        <SearchResultCard key={repo.id} repo={repo} onTrack={handleTrack} />
+        <SearchResultCard
+          key={repo.id}
+          repo={repo}
+          onTrack={handleTrack}
+          isTracked={trackedRepoIds.includes(repo.id)}
+        />
       ))}
     </Stack>
   );

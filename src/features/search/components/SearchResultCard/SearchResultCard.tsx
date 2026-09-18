@@ -5,6 +5,7 @@ import type { SearchResultCardProps } from "./SearchResultCard.types";
 export function SearchResultCard({
   repo,
   onTrack,
+  isTracked,
 }: SearchResultCardProps) {
   return (
     <Card variant="outlined">
@@ -20,7 +21,11 @@ export function SearchResultCard({
 
           <Typography>Open issues: {repo.openIssues}</Typography>
 
-          <Button variant="contained" onClick={() => onTrack(repo)}>
+          <Button
+            variant="contained"
+            onClick={() => onTrack(repo)}
+            disabled={isTracked}
+          >
             Track
           </Button>
         </Stack>

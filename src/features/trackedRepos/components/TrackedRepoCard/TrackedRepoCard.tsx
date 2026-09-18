@@ -2,7 +2,11 @@ import { Button, Card, CardContent, Stack, Typography } from "@mui/material";
 
 import type { TrackedRepoCardProps } from "./TrackedRepoCard.types";
 
-export function TrackedRepoCard({ repo, onUntrack }: TrackedRepoCardProps) {
+export function TrackedRepoCard({
+  repo,
+  onUntrack,
+  onRefresh,
+}: TrackedRepoCardProps) {
   return (
     <Card variant="outlined">
       <CardContent>
@@ -31,13 +35,22 @@ export function TrackedRepoCard({ repo, onUntrack }: TrackedRepoCardProps) {
             <Typography color="error">{repo.error}</Typography>
           )}
         </Stack>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => onUntrack(repo.id)}
-        >
-          Untrack
-        </Button>
+        <Stack spacing={2}>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => onUntrack(repo.id)}
+          >
+            Untrack
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => onRefresh(repo.id)}
+            disabled={repo.status === "loading"}
+          >
+            {repo.status === "loading" ? "Refreshing..." : "Refresh"}
+          </Button>
+        </Stack>
       </CardContent>
     </Card>
   );

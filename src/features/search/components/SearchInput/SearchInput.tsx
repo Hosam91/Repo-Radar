@@ -3,26 +3,27 @@ import { TextField } from "@mui/material";
 import { useDebounce } from "../../../../shared/hooks/useDebounce";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { searchRepositories } from "../../../../redux/search/searchThunks";
+import { clearSearch } from "../../../../redux/search/searchSlice";
 
 export function SearchInput() {
   const [query, setQuery] = useState("");
   const dispatch = useAppDispatch();
   const debouncedQuery = useDebounce(query, 500);
 
- useEffect(() => {
-  const trimmedQuery = debouncedQuery.trim();
+  useEffect(() => {
+    const trimmedQuery = debouncedQuery.trim();
 
-  if (!trimmedQuery) {
-    return;
-  }
+    if (!trimmedQuery) {
+      dispatch(clearSearch());
+      return;
+    }
 
-  const request = dispatch(searchRepositories(trimmedQuery));
+    const request = dispatch(searchRepositories(trimmedQuery));
 
-  return () => {
-    request.abort();
-  };
-}, [debouncedQuery, dispatch]);
-
+    return () => {
+      request.abort();
+    };
+  }, [debouncedQuery, dispatch]);
 
   return (
     <TextField
