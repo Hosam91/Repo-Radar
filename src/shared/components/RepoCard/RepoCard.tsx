@@ -1,8 +1,11 @@
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Box, CardContent, Stack } from "@mui/material";
 
 import type { RepoCardProps } from "./RepoCard.types";
 import {
+  IssueIcon,
+  IssuesValue,
   RepoCardActions,
+  RepoCardRoot,
   RepoDescription,
   RepoName,
   StarRatingIcon,
@@ -12,7 +15,7 @@ import { formatNumber } from "../../utils/formatNumber";
 
 export function RepoCard({ repo, children, actions }: RepoCardProps) {
   return (
-    <Card variant="outlined">
+    <RepoCardRoot variant="outlined">
       <CardContent>
         <Stack spacing={2}>
           <Box>
@@ -29,9 +32,10 @@ export function RepoCard({ repo, children, actions }: RepoCardProps) {
               Stars: {formatNumber(repo.stars)}
             </StarsValue>
 
-            <Typography variant="body2">
+            <IssuesValue variant="body2">
+              <IssueIcon fontSize="inherit" />
               Open issues: {formatNumber(repo.openIssues)}
-            </Typography>
+            </IssuesValue>
           </Stack>
 
           {children}
@@ -39,6 +43,6 @@ export function RepoCard({ repo, children, actions }: RepoCardProps) {
       </CardContent>
 
       {actions && <RepoCardActions>{actions}</RepoCardActions>}
-    </Card>
+    </RepoCardRoot>
   );
 }
