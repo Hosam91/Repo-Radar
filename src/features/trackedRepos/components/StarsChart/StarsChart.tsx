@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material/styles";
 import {
   Bar,
   BarChart,
@@ -19,11 +20,14 @@ import {
 import { formatNumber } from "../../../../shared/utils/formatNumber";
 
 export function StarsChart() {
+  const theme = useTheme();
   const data = useAppSelector(selectStarsChartData);
 
   if (data.length === 0) {
     return null;
   }
+
+  const tickColor = theme.palette.text.secondary;
 
   return (
     <ChartContainer>
@@ -44,15 +48,41 @@ export function StarsChart() {
               left: 0,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke={theme.palette.divider}
+            />
 
-            <XAxis dataKey="name" tickMargin={8} minTickGap={20} />
+            <XAxis
+              dataKey="name"
+              tickMargin={8}
+              minTickGap={20}
+              tick={{ fill: tickColor }}
+              stroke={theme.palette.divider}
+            />
 
-            <YAxis tickFormatter={formatNumber} />
+            <YAxis
+              tickFormatter={formatNumber}
+              tick={{ fill: tickColor }}
+              stroke={theme.palette.divider}
+            />
 
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: theme.palette.background.paper,
+                borderColor: theme.palette.divider,
+                color: theme.palette.text.primary,
+              }}
+              labelStyle={{ color: theme.palette.text.primary }}
+            />
 
-            <Bar dataKey="stars" name="Stars" radius={[4, 4, 0, 0]} />
+            <Bar
+              dataKey="stars"
+              name="Stars"
+              radius={[4, 4, 0, 0]}
+              fill={theme.palette.primary.main}
+            />
           </BarChart>
         </ResponsiveContainer>
       </ChartWrapper>

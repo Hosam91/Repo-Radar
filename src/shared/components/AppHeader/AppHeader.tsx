@@ -1,3 +1,8 @@
+import Tooltip from "@mui/material/Tooltip";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+
+import { useThemeMode } from "../../contexts/ThemeModeContext";
 import {
   BrandSection,
   HeaderContent,
@@ -6,9 +11,14 @@ import {
   HeaderSubtitle,
   HeaderTextGroup,
   HeaderTitle,
+  ThemeToggleButton,
 } from "./AppHeader.styles";
 
 export function AppHeader() {
+  const { mode, toggleMode } = useThemeMode();
+  const toggleLabel =
+    mode === "dark" ? "Switch to light mode" : "Switch to dark mode";
+
   return (
     <HeaderRoot component="header">
       <HeaderContent maxWidth="lg">
@@ -25,6 +35,12 @@ export function AppHeader() {
             </HeaderSubtitle>
           </HeaderTextGroup>
         </BrandSection>
+
+        <Tooltip title={toggleLabel}>
+          <ThemeToggleButton onClick={toggleMode} aria-label={toggleLabel} size="small">
+            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          </ThemeToggleButton>
+        </Tooltip>
       </HeaderContent>
     </HeaderRoot>
   );

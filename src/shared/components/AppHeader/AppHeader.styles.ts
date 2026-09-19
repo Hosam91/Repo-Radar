@@ -1,4 +1,4 @@
-import { Box, Container, Typography, styled } from "@mui/material";
+import { Box, Container, IconButton, Typography, styled } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 export const HeaderRoot = styled(Box)(({ theme }) => ({
@@ -9,6 +9,8 @@ export const HeaderRoot = styled(Box)(({ theme }) => ({
 export const HeaderContent = styled(Container)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  justifyContent: "space-between",
+  gap: theme.spacing(1),
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2),
 
@@ -17,6 +19,10 @@ export const HeaderContent = styled(Container)(({ theme }) => ({
     paddingBottom: theme.spacing(3),
   },
 }));
+
+export const ThemeToggleButton = styled(IconButton)({
+  flexShrink: 0,
+});
 
 export const BrandSection = styled(Box)(({ theme }) => ({
   display: "flex",
