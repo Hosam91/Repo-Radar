@@ -1,40 +1,47 @@
 import { useState } from "react";
-import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Stack, Tab, Tabs } from "@mui/material";
+
 import { SearchInput } from "../../features/search/components/SearchInput";
 import { SearchResults } from "../../features/search/components/SearchResults";
 import { TrackedReposList } from "../../features/trackedRepos/components/TrackedReposList";
+import { PageContainer, PageSubtitle, PageTitle } from "./DashboardPage.styles";
 
 export function DashboardPage() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <Container maxWidth="lg">
-      <Typography component="h1" variant="h3">
-        Repo Radar
-      </Typography>
+    <PageContainer maxWidth="lg">
+      <Stack spacing={4}>
+        <Box>
+          <PageTitle component="h1" variant="h3">
+            Repo Radar
+          </PageTitle>
 
-      <Box sx={{ mt: 3 }}>
+          <PageSubtitle color="text.secondary">
+            Search, track, and monitor GitHub repositories.
+          </PageSubtitle>
+        </Box>
+
         <Tabs
           value={activeTab}
           onChange={(_, newValue: number) => setActiveTab(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
         >
           <Tab label="Search Repositories" />
           <Tab label="Tracked Repositories" />
         </Tabs>
-      </Box>
 
-      <Box sx={{ mt: 3 }}>
         {activeTab === 0 && (
-          <Box>
+          <Stack spacing={3}>
             <SearchInput />
-            <Box sx={{ mt: 3 }}>
-              <SearchResults />
-            </Box>
-          </Box>
+            <SearchResults />
+          </Stack>
         )}
 
         {activeTab === 1 && <TrackedReposList />}
-      </Box>
-    </Container>
+      </Stack>
+    </PageContainer>
   );
 }

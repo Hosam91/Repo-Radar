@@ -1,7 +1,12 @@
-import type { SearchRepository } from "../../../../shared/types/repository";
+import type {
+  SearchRepository,
+  TrackedRepository,
+} from "../../../../shared/types/repository";
 
 export interface SearchResultCardProps {
   repo: SearchRepository;
+  trackedRepo?: TrackedRepository;
   onTrack: (repo: SearchRepository) => void;
-  isTracked: boolean;
+  onUntrack: (repoId: number) => void;
+  onRefresh: (repoId: number) => void;
 }

@@ -21,3 +21,5 @@ export const selectStarsChartData = createSelector(
       stars: byId[id].stars,
     })),
 );
+export const selectTrackedReposById = (state: RootState) =>
+  state.trackedRepos.byId;
