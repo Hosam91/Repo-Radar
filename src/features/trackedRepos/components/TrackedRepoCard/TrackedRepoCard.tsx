@@ -46,7 +46,7 @@ export function TrackedRepoCard({
         </Typography>
 
         <Typography variant="body2" color="text.secondary">
-          {lastUpdatedAt ? formatDate(lastUpdatedAt) : "Not updated yet"}
+          Last updated: {lastUpdatedAt ? formatDate(lastUpdatedAt) : "Not updated yet"}
         </Typography>
 
         {hasError && (
