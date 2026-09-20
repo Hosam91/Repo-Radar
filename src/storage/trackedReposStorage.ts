@@ -6,9 +6,9 @@ export type PersistedRepository = Omit<TrackedRepository, "status" | "error">;
 export function saveTrackedRepositories(
   repositories: TrackedRepository[],
 ): void {
-  const persistedRepositories: PersistedRepository[] = repositories.map(
-    ({ status, error, ...repository }) => repository,
-  );
+const persistedRepositories: PersistedRepository[] = repositories.map(
+  ({ status: _status, error: _error, ...repository }) => repository,
+);
 
   localStorage.setItem(
     STORAGE_KEYS.trackedRepositories,
