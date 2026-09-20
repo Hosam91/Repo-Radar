@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
@@ -21,6 +22,7 @@ import {
   fetchMissingCommit,
   refreshRepository,
 } from "../../../../redux/trackedRepos/trackedReposThunks";
+import { EmptyState } from "../../../../shared/components/EmptyState";
 import type { SearchRepository } from "../../../../shared/types/repository";
 
 import { SearchResultCard } from "../SearchResultCard";
@@ -34,7 +36,18 @@ export function SearchResults() {
   const trackedReposById = useAppSelector(selectTrackedReposById);
 
   if (status === "idle") {
-    return null;
+    return (
+      <EmptyState
+        icon={<SearchOutlined sx={{ fontSize: 48 }} />}
+        title="Discover GitHub repositories"
+        description="Search for repositories and track the ones you want to monitor over time."
+        helperContent={
+          <Typography variant="body2" color="text.secondary">
+            Try searching for: react · next.js · typescript
+          </Typography>
+        }
+      />
+    );
   }
 
   if (status === "loading") {
@@ -66,24 +79,10 @@ export function SearchResults() {
 
   if (results.length === 0) {
     return (
-      <Box
-        sx={{
-          py: 4,
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h6">
-          No repositories found
-        </Typography>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ mt: 0.5 }}
-        >
-          Try searching with a different repository name.
-        </Typography>
-      </Box>
+      <EmptyState
+        title="No repositories found"
+        description="Try searching with a different repository name."
+      />
     );
   }
 
@@ -93,7 +92,10 @@ export function SearchResults() {
     }
 
     dispatch(trackRepository(repo));
-    dispatch(fetchMissingCommit(repo.id));
+
+    if (!repo.lastCommitDate) {
+      dispatch(fetchMissingCommit(repo.id));
+    }
   };
 
   const handleUntrack = (repoId: number) => {

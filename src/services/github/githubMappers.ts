@@ -9,6 +9,7 @@ export function mapGitHubRepository(repo: GitHubRepository): SearchRepository {
     ownerLogin: repo.owner.login,
     stars: repo.stargazers_count,
     openIssues: repo.open_issues_count,
+    lastCommitDate: null,
   };
 }
 

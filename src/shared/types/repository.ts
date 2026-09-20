@@ -8,10 +8,10 @@ export interface SearchRepository {
   ownerLogin: string
   stars: number
   openIssues: number
+  lastCommitDate: string | null
 }
 
 export interface TrackedRepository extends SearchRepository {
-  lastCommitDate: string | null
   lastUpdatedAt: string | null
   status: AsyncStatus
   error: string | null

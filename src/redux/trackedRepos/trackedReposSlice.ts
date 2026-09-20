@@ -39,7 +39,6 @@ const trackedReposSlice = createSlice({
 
       state.byId[repo.id] = {
         ...repo,
-        lastCommitDate: null,
         lastUpdatedAt: null,
         status: "idle",
         error: null,

@@ -16,15 +16,19 @@ export function SearchResultCard({
   const displayRepo = trackedRepo ?? repo;
 
   const getLastCommitMessage = () => {
-    if (!isTracked) {
-      return "Track to see last commit";
+    if (isTracked) {
+      if (isLoading && !trackedRepo?.lastCommitDate) {
+        return "Fetching latest commit...";
+      }
+
+      return formatDate(trackedRepo?.lastCommitDate);
     }
 
-    if (isLoading && !trackedRepo?.lastCommitDate) {
-      return "Fetching latest commit...";
+    if (repo.lastCommitDate) {
+      return formatDate(repo.lastCommitDate);
     }
 
-    return formatDate(trackedRepo?.lastCommitDate);
+    return "Track to see last commit";
   };
 
   const handleRefresh = () => onRefresh(repo.id);
