@@ -13,13 +13,13 @@ import {
 
 import { StarsChart } from "../StarsChart";
 import { TrackedRepoCard } from "../TrackedRepoCard";
-import { RefreshAllButton } from "../RefreshAllButton/RefreshAllButton";
 import {
   EmptyStateContainer,
   EmptyStateDescription,
   HeaderStack,
   SectionTitle,
 } from "./TrackedReposList.styles";
+import { RefreshAllButton } from "../RefreshAllButton";
 
 export function TrackedReposList() {
   const dispatch = useAppDispatch();

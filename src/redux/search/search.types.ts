@@ -5,4 +5,5 @@ export interface SearchState {
   results: SearchRepository[];
   status: AsyncStatus;
   error: string | null;
+  currentRequestId: string | null;
 }

@@ -617,3 +617,5 @@ The main architectural decisions in Repo Radar include:
 - Shared repository card presentation to reduce duplicated UI code
 
 These decisions keep the application relatively simple while maintaining clear responsibilities between UI, application state, persistence, and external API communication.
+
+
